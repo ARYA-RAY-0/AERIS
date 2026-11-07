@@ -1,6 +1,7 @@
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import String
+
+from aeris_interfaces.msg import MissionStatus
 
 
 class MissionPublisher(Node):
@@ -9,7 +10,7 @@ class MissionPublisher(Node):
         super().__init__("aeris_mission_publisher")
 
         self.publisher = self.create_publisher(
-            String,
+            MissionStatus,
             "/aeris/mission_status",
             10
         )
@@ -17,13 +18,21 @@ class MissionPublisher(Node):
         self.timer = self.create_timer(2.0, self.publish_status)
 
     def publish_status(self):
-        message = String()
-        message.data = "MISSION: INSPECTION_READY"
+        message = MissionStatus()
+
+        message.mission_id = "INSPECT-001"
+        message.target = "BRIDGE_DECK_A"
+        message.state = "PLANNING"
+        message.priority = 2
+        message.waypoint_count = 18
+        message.progress = 0.0
 
         self.publisher.publish(message)
 
         self.get_logger().info(
-            f"Published: {message.data}"
+            f"Mission {message.mission_id} | "
+            f"Target: {message.target} | "
+            f"State: {message.state}"
         )
 
 
@@ -43,3 +52,4 @@ def main(args=None):
 
 if __name__ == "__main__":
     main()
+    
