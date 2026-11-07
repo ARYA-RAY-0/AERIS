@@ -27,6 +27,8 @@ setup(
         'heartbeat = aeris_core.heartbeat:main',
         'mission_publisher = aeris_core.mission_publisher:main',
         'monitor = aeris_core.monitor:main',
+        'mission_manager = aeris_core.mission_manager:main',
+        'route_planner = aeris_core.route_planner:main',
     ],
 },
 )
